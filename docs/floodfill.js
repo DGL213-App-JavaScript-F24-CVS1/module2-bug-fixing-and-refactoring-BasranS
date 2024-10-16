@@ -56,12 +56,14 @@ function initializeGrid() {
     for (let i = 0; i < CELLS_PER_AXIS * CELLS_PER_AXIS; i++) {
         newGrid.push(chooseRandomPropertyFrom(CELL_COLORS));
     }
+    console.log("Initialized grid:", newGrid);
     return newGrid;
 }
 
 function initializeHistory(startingGrid) {
     grids = [];
     grids.push(startingGrid);
+   console.log("Initialized history:", grids);
 }   
 
 function rollBackHistory() {
@@ -69,6 +71,9 @@ function rollBackHistory() {
         grids = grids.slice(0, grids.length-1);
         render(grids[grids.length-1]);
     }
+   else {
+         console.log("No more moves to undo.");
+  }
 }
 
 function transposeGrid() {
