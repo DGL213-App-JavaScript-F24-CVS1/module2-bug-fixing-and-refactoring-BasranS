@@ -103,7 +103,7 @@ function render(grid) {
         console.log("Invalid grid passed to render.");
         return;
     }
-    
+
     console.log("Rendering grid:", grid);
     for (let i = 0; i < grid.length; i++) {
         ctx.fillStyle = `rgb(${grid[i][0]}, ${grid[i][1]}, ${grid[i][2]})`;
@@ -114,6 +114,7 @@ function render(grid) {
 
 function updateGridAt(mousePositionX, mousePositionY) {
     const gridCoordinates = convertCartesiansToGrid(mousePositionX, mousePositionY);
+    console.log("Grid coordinates on click:", gridCoordinates);
     const newGrid = grids[grids.length-1].slice(); 
     floodFill(newGrid, gridCoordinates, newGrid[gridCoordinates.column * CELLS_PER_AXIS + gridCoordinates.row])
     grids.push(newGrid);
@@ -122,12 +123,24 @@ function updateGridAt(mousePositionX, mousePositionY) {
 
 function updatePlayerScore() {
 playerScore = playerScore > 0 ? playerScore -= 1 : 0;
+playerScoreText.textContent = playerScore;
+console.log("Updated player score:", playerScore);
 }
 
+
 function floodFill(grid, gridCoordinate, colorToChange) { 
-    if (arraysAreEqual(colorToChange, replacementColor)) { return } //The current cell is already the selected color
-    else if (!arraysAreEqual(grid[gridCoordinate.row * CELLS_PER_AXIS + gridCoordinate.column], colorToChange)) { return }  //The current cell is a different color than the initially clicked-on cell
+    console.log("Starting flood fill:", gridCoordinate, colorToChange);
+    if (arraysAreEqual(colorToChange, replacementColor)) { 
+        console.log("Cell already the selected color, skipping fill.");
+        return;
+    } //The current cell is already the selected color
+    else if (!arraysAreEqual(grid[gridCoordinate.row * CELLS_PER_AXIS + gridCoordinate.column], colorToChange)) {
+        console.log("Current cell is not the color to be changed, skipping.");
+        return;
+     }  //The current cell is a different color than the initially clicked-on cell
     else {
+         // Change the color of the current cell
+        console.log(`Changing color of cell at (${gridCoordinate.row}, ${gridCoordinate.column})`);
         grid[gridCoordinate.row * CELLS_PER_AXIS + gridCoordinate.column] = replacementColor;
         floodFill(grid, {column: Math.max(gridCoordinate.column - 1, 0), row: gridCoordinate.row}, colorToChange);
         floodFill(grid, {column: Math.min(gridCoordinate.column + 1, CELLS_PER_AXIS - 1), row: gridCoordinate.row}, colorToChange);
@@ -136,6 +149,8 @@ function floodFill(grid, gridCoordinate, colorToChange) {
     }
     return
 }
+
+
 
 function restart() {
     startGame(grids[0]);
