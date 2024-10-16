@@ -1,7 +1,9 @@
 "use strict";
 
+// window.addEventListener("load",() //
+
 (() => {
-window.addEventListener("load", (event) => {
+window.addEventListener("load", () => {
 // *****************************************************************************
 // #region Constants and Variables
 
