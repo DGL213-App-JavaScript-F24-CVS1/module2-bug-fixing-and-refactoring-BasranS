@@ -25,15 +25,16 @@ const CELL_COLORS = {
     red: [255, 0, 0],
     green: [0, 255, 0], 
     blue: [0, 0, 255]
-}
+};
+
 const CELLS_PER_AXIS = 9;
 const CELL_WIDTH = canvas.width/CELLS_PER_AXIS;
 const CELL_HEIGHT = canvas.height/CELLS_PER_AXIS;
-const MAXIMUM_SCORE = CELLS_PER_AXIS * CELLS_PER_AXIS;;
+const MAXIMUM_SCORE = CELLS_PER_AXIS * CELLS_PER_AXIS;
 
 // Game objects
 let replacementColor = CELL_COLORS.white;
-let grids;
+let grids = [];
 let playerScore = MAXIMUM_SCORE;
 
 // #endregion
